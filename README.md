@@ -1,6 +1,21 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 6 cloud-testapp
+testapp_IP = 158.160.52.147
+testapp_port = 9292
+
+Startup скрипт
+yc compute instance create \
+ --name reddit-app \
+ --hostname reddit-app \
+ --memory=4 \
+ --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1604-lts,size=10GB \
+ --network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4 \
+ --metadata serial-port-enable=1 \
+ --metadata-from-file user-data=./user-data.yaml
+
+
 ДЗ 5 cloud-bastion
 bastion_IP = 158.160.59.119
 someinternalhost_IP = 10.128.0.14
@@ -29,7 +44,6 @@ Host someinternalhost
 
 
 
-
 Заметки для себя
 
 Подключение через openvpn из snirin_infra/cloud-bastion
@@ -38,3 +52,6 @@ ssh -i ~/.ssh/appuser appuser@10.128.0.14
 
 Подключение к mongo у pritunl на bastion
 mongosh mongodb://127.0.0.1:27017/pritunl?authSource=admin
+
+Подключение по ssh без вопроса про неизвестный хост
+ssh yc-user@158.160.109.146 -oStrictHostKeyChecking=no
