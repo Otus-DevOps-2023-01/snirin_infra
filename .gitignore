@@ -1,1 +1,4 @@
 VPN/cloud-bastion-password
+secrets/key.json
+packer/variables.json
+packer/files/reddit-full-variables.json

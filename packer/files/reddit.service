@@ -1,0 +1,9 @@
+[Unit]
+Description=Reddit app
+
+[Service]
+User=yc-user
+ExecStart=/usr/local/bin/puma --dir /home/ubuntu/reddit
+
+[Install]
+WantedBy=multi-user.target

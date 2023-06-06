@@ -1,6 +1,13 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 7 packer-base
+Сделано:
+ - Создание базового образа - `packer build -var-file variables.json ubuntu16.json`
+ - Создание полного образа - `packer build -var-file ./files/reddit-full-variables.json immutable.json`
+ - Скрипт создания ВМ из образа - `create-reddit-vm.sh <INSTANCE_NAME> <IMAGE_ID>`, после выполнения скрипта веб-приложение сразу доступно через браузер
+
+
 ДЗ 6 cloud-testapp
 testapp_IP = 158.160.52.147
 testapp_port = 9292
@@ -55,3 +62,12 @@ mongosh mongodb://127.0.0.1:27017/pritunl?authSource=admin
 
 Подключение по ssh без вопроса про неизвестный хост
 ssh yc-user@158.160.109.146 -oStrictHostKeyChecking=no
+
+packer
+Подключение в режиме отладки к машине, используемую packer для подготовки образа
+ssh ubuntu@84.201.133.222 -i yc_yandex.pem -oStrictHostKeyChecking=no (yc_yandex.pem - созданный в текущем каталоге файл с приватным ключом)
+
+Отлючение параллелизма packer
+packer build -parallel-builds=1 ./ubuntu16.json
+для борьбы с ошибкой "Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend)"
+Такой способ не сработал https://blog.opstree.com/2022/07/26/how-to-fix-the-dpkg-lock-file-error-in-packer/

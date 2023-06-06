@@ -1,0 +1,6 @@
+{
+    "service_account_key_file": "../secrets/key.json",
+    "folder_id": "111",
+    "source_image_id": "fff",
+    "image_description": "Reddit full"
+}
