@@ -1,0 +1,38 @@
+{
+     "variables": {
+         "service_account_key_file": null,
+         "folder_id": null,
+         "source_image_id": null,
+         "image_description": ""
+     },
+     "builders": [
+        {
+            "type": "yandex",
+            "service_account_key_file": "{{user `service_account_key_file`}}",
+            "folder_id": "{{user `folder_id`}}",
+            "source_image_id": "{{user `source_image_id`}}",
+            "image_name": "reddit-full-{{timestamp}}",
+            "image_description": "{{user `image_description`}}",
+            "image_family": "reddit-full",
+            "ssh_username": "ubuntu",
+            "platform_id": "standard-v1",
+            "use_ipv4_nat": true
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "files/reddit.service",
+            "destination": "/tmp/reddit.service"
+        },
+        {
+            "type": "shell",
+            "inline": "sudo mv /tmp/reddit.service /lib/systemd/system/reddit.service"
+        },
+        {
+            "type": "shell",
+            "script": "scripts/deploy.sh",
+            "execute_command": "sudo {{.Path}}"
+        }
+    ]
+}
