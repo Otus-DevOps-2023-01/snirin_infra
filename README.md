@@ -1,6 +1,13 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 8 terraform-1
+Сделано:
+ - Установлен terraform и по инструкции созданы файлы необходимые для развертывания приложения
+ - Добавлена переменные для приватного ключа и зоны
+ - Файлы отформатированы через terraform fmt
+ - Создан example-файл для переменных
+
 ДЗ 7 packer-base
 Сделано:
  - Создание базового образа - `packer build -var-file variables.json ubuntu16.json`
