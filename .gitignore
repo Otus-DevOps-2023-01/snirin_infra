@@ -1,6 +1,7 @@
+.idea/
+
 VPN/cloud-bastion-password
-secrets/key.json
-secrets/terraform-key.json
+secrets/*
 packer/variables.json
 packer/files/reddit-full-variables.json
 
