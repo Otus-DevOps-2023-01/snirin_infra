@@ -1,6 +1,10 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 10 ansible-1
+Сделано:
+- Написан плейбук для установки reddit, если его еще нет, то результат - "changed=1", если есть - "changed=0"
+
 ДЗ 9 terraform-2
 Сделано:
 - Удалены лишние файлы, параметризованы модули и все отформатировано через terraform fmt
