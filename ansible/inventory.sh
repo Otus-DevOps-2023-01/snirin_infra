@@ -6,29 +6,10 @@ db_external_ip=$(cd ../terraform/stage && terraform output external_ip_address_d
 cat <<EOF
 {
   "app": {
-    "hosts": ["$app_external_ip"]
+    "hosts": [$app_external_ip]
   },
   "db": {
-    "hosts": ["$db_external_ip"]
+    "hosts": [$db_external_ip]
   }
 }
 EOF
-
-#cat <<EOF
-#{
-#  "app": {
-#    "hosts": {
-#      "appserver": {
-#        "ansible_host": $app_external_ip
-#      }
-#    }
-#  },
-#  "db": {
-#    "hosts": {
-#      "dbserver": {
-#        "ansible_host": $db_external_ip
-#      }
-#    }
-#  }
-#}
-#EOF

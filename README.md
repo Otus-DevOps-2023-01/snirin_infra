@@ -4,6 +4,11 @@ snirin Infra repository
 ДЗ 10 ansible-1
 Сделано:
 - Написан плейбук для установки reddit, если его еще нет, то результат - "changed=1", если есть - "changed=0"
+- Написан скрипт для динамического инвентори `inventory.sh`, для выполнения в `ansible.cfg` добавлены строки
+```
+  [inventory]
+  "enable_plugins = script"
+```
 
 Для себя список команд
 appserver ansible_host=35.195.186.154 ansible_user=appuser ansible_private_key_file=~/.ssh/appuser
