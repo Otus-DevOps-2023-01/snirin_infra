@@ -1,0 +1,12 @@
+---
+- name: Install ruby
+  become: true
+  tasks:
+    - name: Apt install ruby
+      apt:
+        name:
+          - ruby-full
+          - ruby-bundler
+          - build-essential
+        state: present
+        update_cache: yes
