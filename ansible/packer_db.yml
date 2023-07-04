@@ -1,5 +1,6 @@
 ---
 - name: Install and enable mongo
+  hosts: default
   become: true
   tasks:
     - name: Apt install mongo

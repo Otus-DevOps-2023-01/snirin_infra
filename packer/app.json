@@ -3,7 +3,7 @@
     "service_account_key_file": null,
     "folder_id": null,
     "source_image_family": null,
-    "image_description": ""
+    "image_description": "App image"
   },
   "builders": [
     {

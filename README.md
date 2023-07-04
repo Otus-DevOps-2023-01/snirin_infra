@@ -2,14 +2,42 @@
 snirin Infra repository
 
 ДЗ 10 ansible-2
-Добавил в плейбук установку git
+Сделано:
+-Перевел провижионеры packer на ansible
+-Дополнительно добавил в плейбук deploy.yml установку git
+-Для борьбы с ошибкой подключения ansible через packer
+```
+Failed to connect to the host via ssh: Unable to negotiate with 127.0.0.1 port 45547: no matching host key type
+found. Their offer: ssh-rsa
+```
+добавил в ~/.ssh/config строки
+```
+PubkeyAcceptedAlgorithms +ssh-rsa
+HostkeyAlgorithms +ssh-rsa
+```
+по совету из https://www.bojankomazec.com/2022/10/how-to-fix-ansible-error-failed-to.html
 
 
 Для себя список команд
+```
 ansible-playbook reddit_app.yml --limit db --tags db-tag
 ansible-playbook reddit_app.yml --limit app --tags app-tag
 ansible-playbook reddit_app.yml --limit app --tags deploy-tag --check
 ansible-playbook reddit_app.yml --limit app --tags deploy-tag
+ansible-playbook site.yml
+```
+
+Полезное
+- block, rescue, always
+В лекции:
+- настройка nginx
+- block
+- when
+- get_url
+- apt_repository
+- работа с шаблонами
+- работа с ролями
+- tag never
 
 ДЗ 10 ansible-1
 Сделано:
@@ -21,6 +49,9 @@ ansible-playbook reddit_app.yml --limit app --tags deploy-tag
 ```
 
 Для себя список команд
+```
+ansible 127.0.0.1 -m ping
+ansible 127.0.0.1 -m setup
 appserver ansible_host=35.195.186.154 ansible_user=appuser ansible_private_key_file=~/.ssh/appuser
 ansible appserver -i ./inventory -m ping
 ansible dbserver -m command -a uptime
@@ -33,6 +64,13 @@ ansible db -m systemd -a name=mongod
 ansible db -m service -a name=mongod
 ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/appuser/reddit'
 ansible-playbook clone.yml
+```
+
+Полезное
+- Опция Gather_facts=false
+- Mодуль debug, выводящий результат зарегистрированный ранее. Например, статус nginx в лекции на 1.49.00
+- Для модуля shell есть опция changed_when
+- Установка mongo с подключением репозиториев https://gist.github.com/Nklya/bb2ca080692f75ef1cb2dd24a9926fa8
 
 ДЗ 9 terraform-2
 Сделано:
@@ -46,6 +84,11 @@ ansible-playbook clone.yml
     https://cloud.yandex.com/en-ru/docs/tutorials/infrastructure-management/terraform-state-lock
 - Добавлены провижионеры и их опциональное отключение
 - Mongodb открыто наружу
+
+Для себя список команд
+```
+terraform/stage$ terraform destroy -auto-approve; terraform apply -auto-approve
+```
 
 ДЗ 8 terraform-1
 Сделано:
@@ -118,6 +161,7 @@ ssh yc-user@158.160.109.146 -oStrictHostKeyChecking=no
 
 packer
 Подключение в режиме отладки к машине, используемую packer для подготовки образа
+packer build -debug
 ssh ubuntu@84.201.133.222 -i yc_yandex.pem -oStrictHostKeyChecking=no (yc_yandex.pem - созданный в текущем каталоге файл с приватным ключом)
 
 Отлючение параллелизма packer
