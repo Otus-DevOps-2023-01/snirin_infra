@@ -2,6 +2,7 @@
 
 app_external_ip=$(cd ../terraform/stage && terraform output external_ip_address_app)
 db_external_ip=$(cd ../terraform/stage && terraform output external_ip_address_db)
+db_internal_ip=$(cd ../terraform/stage && terraform output internal_ip_address_db)
 
 cat <<EOF
 {
@@ -9,7 +10,8 @@ cat <<EOF
     "hosts": [$app_external_ip]
   },
   "db": {
-    "hosts": [$db_external_ip]
+    "hosts": [$db_external_ip],
+    "internal_ip": $db_internal_ip
   }
 }
 EOF
