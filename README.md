@@ -1,7 +1,16 @@
 # snirin_infra
 snirin Infra repository
 
-ДЗ 10 ansible-2
+ДЗ 12 ansible-3
+Для себя
+https://galaxy.ansible.com/docs/
+Список команд
+```
+ansible-galaxy -h
+```
+
+
+ДЗ 11 ansible-2
 Сделано:
 -Перевел провижионеры packer на ansible
 -Дополнительно добавил в плейбук `deploy.yml` установку git
