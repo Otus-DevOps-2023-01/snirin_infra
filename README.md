@@ -2,6 +2,7 @@
 snirin Infra repository
 
 ДЗ 12 ansible-3
+todo проверить packer
 Для себя
 https://galaxy.ansible.com/docs/
 Список команд

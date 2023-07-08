@@ -1,0 +1,11 @@
+---
+- name: Configure App
+  hosts: app
+  become: true
+
+#todo remove
+#  vars:
+#    db_host:  "{{ hostvars[inventory_hostname]['db']['internal_ip'] }}"
+
+  roles:
+    - app
