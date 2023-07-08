@@ -12,3 +12,5 @@ packer/files/reddit-full-variables.json
 .terraform/
 
 *.retry
+
+ansible/roles/jdauphant.nginx
