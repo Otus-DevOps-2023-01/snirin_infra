@@ -4,12 +4,16 @@ snirin Infra repository
 ДЗ 12 ansible-3
 Сделано:
 -Добавлен nginx в app.yml, приложение по 80 порту доступно
+-Настроен динамический инвентори, запуск командой `ansible-playbook -i environments/stage/inventory.sh playbooks/site.yml`
 
 Для себя
 https://galaxy.ansible.com/docs/
 Список команд
 ```
 ansible-galaxy -h
+ansible-vault encrypt
+ansible-vault decrypt
+ansible-vault edit
 ```
 
 
