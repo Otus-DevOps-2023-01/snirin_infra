@@ -2,7 +2,9 @@
 snirin Infra repository
 
 ДЗ 12 ansible-3
-todo проверить packer
+Сделано:
+-Добавлен nginx в app.yml, приложение по 80 порту доступно
+
 Для себя
 https://galaxy.ansible.com/docs/
 Список команд
@@ -13,11 +15,11 @@ ansible-galaxy -h
 
 ДЗ 11 ansible-2
 Сделано:
--Перевел провижионеры packer на ansible
--Дополнительно добавил в плейбук `deploy.yml` установку git
--В output терраформа добавил переменную `db_internal_ip`, вывел ее в `inventory.sh`
- и передал через `hostvars[inventory_hostname]['db']['internal_ip']` в `app.yml`
--Загрузил yc_compute.py, сделал файл `yc.yml`, поправил ansible.cfg. Команда `ansible-inventory --list` отработала
+-Переведены провижионеры packer на ansible
+-Дополнительно добавлена в плейбук `deploy.yml` установка git
+-В output терраформа добавлена переменная `db_internal_ip`, выведена в `inventory.sh`
+ и передана через `hostvars[inventory_hostname]['db']['internal_ip']` в `app.yml`
+-Загружен yc_compute.py, сделал файл `yc.yml`, поправлен ansible.cfg. Команда `ansible-inventory --list` отработала
 
 С версией ansible 2.15 плагин не работал, установил 2.10
 
