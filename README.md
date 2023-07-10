@@ -1,6 +1,29 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 10 ansible-1
+Сделано:
+- Написан плейбук для установки reddit, если его еще нет, то результат - "changed=1", если есть - "changed=0"
+- Написан скрипт для динамического инвентори `inventory.sh`, для выполнения в `ansible.cfg` добавлены строки
+```
+  [inventory]
+  "enable_plugins = script"
+```
+
+Для себя список команд
+appserver ansible_host=35.195.186.154 ansible_user=appuser ansible_private_key_file=~/.ssh/appuser
+ansible appserver -i ./inventory -m ping
+ansible dbserver -m command -a uptime
+ansible app -m ping
+ansible all -m ping -i inventory.yml
+ansible app -m command -a 'ruby -v'
+ansible app -m shell -a 'ruby -v; bundler -v'
+ansible db -m command -a 'systemctl status mongod'
+ansible db -m systemd -a name=mongod
+ansible db -m service -a name=mongod
+ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/appuser/reddit'
+ansible-playbook clone.yml
+
 ДЗ 9 terraform-2
 Сделано:
 - Удалены лишние файлы, параметризованы модули и все отформатировано через terraform fmt
