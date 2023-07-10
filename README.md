@@ -1,6 +1,54 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 10 ansible-2
+Сделано:
+-Перевел провижионеры packer на ansible
+-Дополнительно добавил в плейбук `deploy.yml` установку git
+-В output терраформа добавил переменную `db_internal_ip`, вывел ее в `inventory.sh`
+ и передал через `hostvars[inventory_hostname]['db']['internal_ip']` в `app.yml`
+-Загрузил yc_compute.py, сделал файл `yc.yml`, поправил ansible.cfg. Команда `ansible-inventory --list` отработала
+
+С версией ansible 2.15 плагин не работал, установил 2.10
+
+Для борьбы с ошибкой подключения ansible через packer
+```
+Failed to connect to the host via ssh: Unable to negotiate with 127.0.0.1 port 45547: no matching host key type
+found. Their offer: ssh-rsa
+```
+добавил в ~/.ssh/config строки
+```
+PubkeyAcceptedAlgorithms +ssh-rsa
+HostkeyAlgorithms +ssh-rsa
+```
+по совету из https://www.bojankomazec.com/2022/10/how-to-fix-ansible-error-failed-to.html
+
+
+Для себя список команд
+```
+ansible-playbook reddit_app.yml --limit db --tags db-tag
+ansible-playbook reddit_app.yml --limit app --tags app-tag
+ansible-playbook reddit_app.yml --limit app --tags deploy-tag --check
+ansible-playbook reddit_app.yml --limit app --tags deploy-tag
+ansible-playbook site.yml
+
+ansible-doc -t inventory yc_compute
+```
+
+Полезное
+- block, rescue, always
+- ansible_facts и hostvars - https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html
+В лекции показано:
+- настройка nginx
+- block
+- when
+- get_url
+- apt_repository
+- шаблоны
+- Роли
+- теги
+- tag never
+
 ДЗ 10 ansible-1
 Сделано:
 - Написан плейбук для установки reddit, если его еще нет, то результат - "changed=1", если есть - "changed=0"
@@ -11,6 +59,9 @@ snirin Infra repository
 ```
 
 Для себя список команд
+```
+ansible 127.0.0.1 -m ping
+ansible 127.0.0.1 -m setup
 appserver ansible_host=35.195.186.154 ansible_user=appuser ansible_private_key_file=~/.ssh/appuser
 ansible appserver -i ./inventory -m ping
 ansible dbserver -m command -a uptime
@@ -24,6 +75,16 @@ ansible db -m service -a name=mongod
 ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/appuser/reddit'
 ansible-playbook clone.yml
 
+ansible-inventory --list
+ansible all -m debug -a "var=hostvars[inventory_hostname]"
+```
+
+Полезное
+- Опция Gather_facts=false
+- Mодуль debug, выводящий результат зарегистрированный ранее. Например, статус nginx в лекции на 1.49.00
+- Для модуля shell есть опция changed_when
+- Установка mongo с подключением репозиториев https://gist.github.com/Nklya/bb2ca080692f75ef1cb2dd24a9926fa8
+
 ДЗ 9 terraform-2
 Сделано:
 - Удалены лишние файлы, параметризованы модули и все отформатировано через terraform fmt
@@ -36,6 +97,11 @@ ansible-playbook clone.yml
     https://cloud.yandex.com/en-ru/docs/tutorials/infrastructure-management/terraform-state-lock
 - Добавлены провижионеры и их опциональное отключение
 - Mongodb открыто наружу
+
+Для себя список команд
+```
+terraform/stage$ terraform destroy -auto-approve; terraform apply -auto-approve
+```
 
 ДЗ 8 terraform-1
 Сделано:
@@ -108,9 +174,13 @@ ssh yc-user@158.160.109.146 -oStrictHostKeyChecking=no
 
 packer
 Подключение в режиме отладки к машине, используемую packer для подготовки образа
+packer build -debug
 ssh ubuntu@84.201.133.222 -i yc_yandex.pem -oStrictHostKeyChecking=no (yc_yandex.pem - созданный в текущем каталоге файл с приватным ключом)
 
 Отлючение параллелизма packer
 packer build -parallel-builds=1 ./ubuntu16.json
 для борьбы с ошибкой "Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend)"
 Такой способ не сработал https://blog.opstree.com/2022/07/26/how-to-fix-the-dpkg-lock-file-error-in-packer/
+
+
+https://github.com/Otus-DevOps-2019-11/snirin_infra/blob/master/README.md

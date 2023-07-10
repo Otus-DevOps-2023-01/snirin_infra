@@ -1,5 +1,5 @@
 {
-    "service_account_key_file": "./fake-key.json",
+    "service_account_key_file": "packer/fake-key.json",
     "folder_id": "abc",
     "source_image_family": "ubuntu-1604-lts",
     "image_description": "Mongo + Ruby"
