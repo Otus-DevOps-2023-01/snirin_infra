@@ -1,0 +1,6 @@
+- name: Apt install mongo
+  apt:
+    name:
+      - mongodb
+    state: present
+    update_cache: yes
