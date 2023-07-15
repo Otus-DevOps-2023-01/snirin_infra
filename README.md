@@ -1,6 +1,46 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 12 ansible-4
+Сделано:
+-Увеличил память для команды "bundle install" до 2048, до этого падала с ошибкой
+-Уменьшил версию molecule с 5.1.0 до 5.0.1, для борьбы с ошибкой `No module named 'ansible.module_utils.common.yaml'`
+ по совету из https://github.innominds.com/ansible-community/molecule/issues/3945#issuecomment-1608061119
+-`molecule init` запускал без флага `--scenario-name`, с ним была ошибка `No such option: --scenario-name`
+-
+
+todo настроить nginx
+
+Для себя
+Список команд
+```
+vagrant -v
+vagrant init
+vagrant up
+vagrant up --provider=virtualbox
+vagrant box list
+vagrant status
+vagrant ssh appserver
+vagrant provision dbserver
+vagrant destroy -f
+
+molecule init
+molecule create
+molecule list
+molecule login -h instance
+molecule converge
+molecule verify
+molecule destroy
+molecule test
+molecule -vvv test
+
+ansible-lint db.yml
+
+pip3 list | grep molecule
+
+source ~/education/otus-devops/tutorial-env/bin/activate
+```
+
 ДЗ 12 ansible-3
 Сделано:
 -Добавлен nginx в app.yml, приложение по 80 порту доступно
@@ -177,6 +217,11 @@ Host someinternalhost
 
 
 Заметки для себя
+Команды
+```
+nmap -p 9292 10.10.10.20
+nmap  -p0-65535 10.10.10.20 -T5
+```
 
 Подключение через openvpn из snirin_infra/cloud-bastion
 sudo openvpn --config cloud-bastion.ovpn --auth-user-pass cloud-bastion-password

@@ -1,5 +1,5 @@
 galaxy_info:
-  author: your name
+  author: snirin
   description: your role description
   company: your company (optional)
 
@@ -27,6 +27,10 @@ galaxy_info:
   # To view available platforms and versions (or releases), visit:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
   # platforms:
   # - name: Fedora
   #   versions:
