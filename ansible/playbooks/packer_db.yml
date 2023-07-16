@@ -2,16 +2,6 @@
 - name: Install and enable mongo
   hosts: default
   become: true
-  tasks:
-    - name: Apt install mongo
-      apt:
-        name:
-          - mongodb
-        state: present
-        update_cache: yes
 
-    - name: Enable mongodb
-      systemd:
-        name: mongodb
-        state: started
-        enabled: true
+  roles:
+    - db
