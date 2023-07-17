@@ -9,6 +9,8 @@ snirin Infra repository
 ```
  "nginx_sites" => {"default" => ['listen 80', 'server_name "reddit"', 'location / { proxy_pass http://127.0.0.1:9292; }']}
 ```
+-Роль db Вынесена во внешний репозиторий https://github.com/snirin/otus_devops_ansible_db_role и добавлена обратно
+ через requirements.yml
 
 В процессе:
 -Увеличена память для команды "bundle install" до 2048, до этого падала с ошибкой
