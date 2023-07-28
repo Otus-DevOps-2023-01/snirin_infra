@@ -1,6 +1,53 @@
 # snirin_infra
 snirin Infra repository
 
+ДЗ 13 ansible-4
+Сделано:
+-Написан тест на доступность порта 27017 у mongo
+-Добавлены роли в плейбуки для packer
+-В Vagrantfile добавлена переменная `nginx_sites` для проксирования на 80 порт
+```
+ "nginx_sites" => {"default" => ['listen 80', 'server_name "reddit"', 'location / { proxy_pass http://127.0.0.1:9292; }']}
+```
+-Роль db Вынесена во внешний репозиторий https://github.com/snirin/otus_devops_ansible_db_role и добавлена обратно
+ через requirements.yml
+
+В процессе:
+-Увеличена память для команды "bundle install" до 2048, до этого падала с ошибкой
+-Уменьшена версия molecule с 5.1.0 до 5.0.1, для борьбы с ошибкой `No module named 'ansible.module_utils.common.yaml'`
+по совету из https://github.innominds.com/ansible-community/molecule/issues/3945#issuecomment-1608061119
+-`molecule init` запускалась без флага `--scenario-name`, с ним была ошибка `No such option: --scenario-name`
+
+Для себя
+Список команд
+```
+vagrant -v
+vagrant init
+vagrant up
+vagrant up --provider=virtualbox
+vagrant box list
+vagrant status
+vagrant ssh appserver
+vagrant provision dbserver
+vagrant destroy -f
+
+molecule init
+molecule create
+molecule list
+molecule login -h instance
+molecule converge
+molecule verify
+molecule destroy
+molecule test
+molecule -vvv test
+
+ansible-lint db.yml
+
+pip3 list | grep molecule
+
+source ~/education/otus-devops/tutorial-env/bin/activate
+```
+
 ДЗ 12 ansible-3
 Сделано:
 -Добавлен nginx в app.yml, приложение по 80 порту доступно
@@ -11,9 +58,9 @@ https://galaxy.ansible.com/docs/
 Список команд
 ```
 ansible-galaxy -h
-ansible-vault encrypt
-ansible-vault decrypt
-ansible-vault edit
+ansible-vault encrypt environments/stage/credentials.yml
+ansible-vault decrypt environments/stage/credentials.yml
+ansible-vault edit environments/stage/credentials.yml
 ```
 
 
@@ -177,6 +224,13 @@ Host someinternalhost
 
 
 Заметки для себя
+Команды
+```
+nmap -p 9292 10.10.10.20
+nmap  -p0-65535 10.10.10.20 -T5
+
+cd ~/education/otus-devops/snirin_infra/terraform/stage; terraform destroy -auto-approve; terraform apply -auto-approve; cd ~/education/otus-devops/snirin_infra/ansible; ansible-playbook -i environments/stage/inventory.sh playbooks/site.yml --extra-vars "deploy_user=ubuntu"
+```
 
 Подключение через openvpn из snirin_infra/cloud-bastion
 sudo openvpn --config cloud-bastion.ovpn --auth-user-pass cloud-bastion-password

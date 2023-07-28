@@ -1,6 +1,4 @@
-db_host_bak:  10.128.0.30
 db_host:  "{{ hostvars[inventory_hostname]['db']['internal_ip'] }}"
-
 
 nginx_sites:
   default:
